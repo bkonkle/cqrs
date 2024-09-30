@@ -27,6 +27,11 @@ impl ReplayStream {
             })
         })
     }
+
+    /// A passthrough for the raw recv method on the internal mpsc channel
+    pub async fn recv(&mut self) -> Option<Result<SerializedEvent, PersistenceError>> {
+        self.queue.recv().await
+    }
 }
 
 fn upcast_event(
